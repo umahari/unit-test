@@ -5,7 +5,9 @@
 "author": "First Last <first.last@example.com>",
 "main": "server.js",
 "scripts": {
-"test": "jest --ci --reporters=default --reporters=jest-junit"
+#"test": "jest --ci --reporters=default --reporters=jest-junit"
+"test": "jest --",
+"coverage": "jest --collectCoverage --"
 },
 "dependencies": {
 "express": "^4.16.1",
