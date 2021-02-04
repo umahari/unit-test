@@ -18,7 +18,7 @@ jobs:
     - uses: act10ns/slack@v1
       with:
           status: starting
-          channel: '#testing-for-punnet'
+          channel: 'test2'
           if: always()
     
     - uses: actions/checkout@v2
