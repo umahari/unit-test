@@ -33,9 +33,9 @@ jobs:
     - name: npm build
       id: npm_build
       run: npm run build --if-present
-    - name: npm test
-      id: npm_test
-      run: npm test -- --coverage
+#     - name: npm test
+#       id: npm_test
+#       run: npm test -- --coverage
     - uses: act10ns/slack@v1
       with:
         status: ${{ job.status }}
