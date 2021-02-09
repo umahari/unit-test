@@ -33,11 +33,13 @@ jobs:
     - name: npm build
       id: npm_build
       run: npm run build --if-present
-#     - name: npm test
-#       id: npm_test
-#       run: npm test -- --coverage
-
-Polaris-scan:
+    - uses: act10ns/slack@v1
+      with:
+       status: ${{ job.status }}
+       steps: ${{ toJson(steps) }}
+       slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+      if: always() 
+  Polaris-scan:
     name: "Polaris Scan"
     runs-on: ubuntu-latest
     # the build-and-test job might be skipped, we don't need to run this job then
@@ -45,7 +47,7 @@ Polaris-scan:
     steps:        
       - uses: actions/checkout@v2       
       - name: Static Analysis with Polaris
-        id: polar_sast
+        id: polaris_sast
         shell : bash 
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -55,10 +57,3 @@ Polaris-scan:
           wget -q https://ikea.polaris.synopsys.com/api/tools/polaris_cli-linux64.zip
           unzip -j polaris_cli-linux64.zip -d /tmp
           /tmp/polaris -c polaris.yml analyze -w --coverity-ignore-capture-failure
-           
-      - uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always() 
