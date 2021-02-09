@@ -50,7 +50,7 @@ jobs:
         id: polaris_sast
         shell : bash 
         env:
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
             GITHB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           export POLARIS_SERVER_URL=${{ secrets.POLARIS_SERVER_URL}}
