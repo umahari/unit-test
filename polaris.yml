@@ -1,0 +1,20 @@
+version: "1"
+project: 
+  branch: ${scm.git.branch}
+  name: SAST_SCAN
+  revision: 
+    date: ${scm.git.commit.date}
+    modified: true
+    name: ${scm.git.commit}
+capture: 
+  fileSystem: 
+    javascript: 
+      extensions: [js]
+      files: 
+      - directory: ./
+      - excludeRegex: node_modules|bower_components|vendor
+analyze: 
+  mode: central
+install: 
+  coverity: 
+    version: default
