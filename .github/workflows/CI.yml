@@ -115,6 +115,12 @@ jobs:
             Issues found: ${{steps.polaris_result.outputs.issues}}
             Summary: ${{steps.polaris_result.outputs.summary-url}}
           edit-mode: replace
+      - uses: act10ns/slack@v1
+        with:
+         status: ${{ job.status }}
+         steps: ${{ toJson(steps) }}
+         slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()  
           
           
 #       - uses: actions/checkout@v2       
