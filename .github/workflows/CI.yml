@@ -62,6 +62,15 @@ jobs:
           wget -q https://ikea.polaris.synopsys.com/api/tools/polaris_cli-linux64.zip
           unzip -j polaris_cli-linux64.zip -d /tmp
           /tmp/polaris -c polaris.yml analyze -w --coverity-ignore-capture-failure
+      - if: ${{steps.polaris_scan}}
+        name: Polaris Result
+        id: polaris_result
+        run: |
+        #cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary'
+         echo "##[set-output name=issues;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.total' )"
+        - name: Create comment
+      # Break build if issue count > 0
+      if: ${{ steps.polaris_result.outputs.issues > 0 }} 
       - uses: act10ns/slack@v1
         with:
          status: ${{ job.status }}
