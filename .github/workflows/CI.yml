@@ -1,6 +1,11 @@
 name: Node.js CI
 
-on: [push]
+on:
+  schedule:
+    - cron: "0-5 * * * *"
+  push:
+    branches:    
+      - main
 
 jobs:
   build:
@@ -38,7 +43,9 @@ jobs:
        status: ${{ job.status }}
        steps: ${{ toJson(steps) }}
        slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-      if: always() 
+      if: always()
+      env: 
+       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
   Polaris-scan:
     name: "Polaris Scan"
     runs-on: ubuntu-latest
