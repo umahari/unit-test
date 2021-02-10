@@ -36,7 +36,7 @@ jobs:
 #       - name: npm Test
 #         id: npm_test
 #         run: npm test
-#         continue-on-error: true
+        continue-on-error: true
       - uses: act10ns/slack@v1
         with:
             status: ${{ job.status }}
