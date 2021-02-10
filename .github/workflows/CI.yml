@@ -1,4 +1,4 @@
-#notification to slack
+#notification to slack.
 name: Node.js CI
 
 on: [push]
