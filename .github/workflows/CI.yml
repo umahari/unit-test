@@ -19,7 +19,7 @@ jobs:
     - uses: act10ns/slack@v1
       with:
           status: starting
-          channel: '#test'
+          channel: '#testing-for-punnet'
           if: always()
     
     - uses: actions/checkout@v2
@@ -39,7 +39,9 @@ jobs:
        status: ${{ job.status }}
        steps: ${{ toJson(steps) }}
        slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-      if: always() 
+      if: always()
+      env: 
+       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
   Polaris-scan:
     name: "Polaris Scan"
     runs-on: ubuntu-latest
