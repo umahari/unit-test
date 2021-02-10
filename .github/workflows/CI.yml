@@ -44,13 +44,14 @@ jobs:
     runs-on: ubuntu-latest
     # the build-and-test job might be skipped, we don't need to run this job then
     if: success() || failure()
+    env:
+       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:        
       - uses: actions/checkout@v2       
       - name: Static Analysis with Polaris
         id: polaris_sast
         shell : bash 
         env:
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
             GITHB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           export POLARIS_SERVER_URL=${{ secrets.POLARIS_SERVER_URL}}
