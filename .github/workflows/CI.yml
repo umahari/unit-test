@@ -1,4 +1,4 @@
-# .github/workflows/deploy.yaml nodejs app...
+# .github/workflows/deploy.yaml nodejs app
 name: Build and Push to DockerHub
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
         node-version: [13.x]
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+#       ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     steps:
       - uses: act10ns/slack@v1
         with:
