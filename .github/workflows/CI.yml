@@ -80,42 +80,14 @@ jobs:
              export PATH=$PATH:$(pwd)/polaris_cli/$(ls ./polaris_cli)/bin
              polaris analyze --coverity-ignore-capture-failure --upload-local-config --wait
       - if: ${{steps.polaris_scan}}
-        name: Polaris Result
+        name: Polaris Severity Issues
         id: polaris_result
         run: |
           #cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary'
-          echo "##[set-output name=issues;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.total' )"
-          echo "##[set-output name=summary-url;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.summaryUrl' )"
-          echo "##[set-output name=pr;]$(echo "$GITHUB_REF" | awk -F / '{print $3}')"
-          echo ${{ steps.polaris_result.outputs.pr }}
-      - if: ${{steps.polaris_scan}}
-        name: Get PR number
-        id: pr
-        shell: bash
-        run: |
-          echo "##[set-output name=pr;]$(echo "$GITHUB_REF" | awk -F / '{print $3}')"
-      - name: Find Comment
-        if: ${{steps.polaris_scan}}
-        uses: peter-evans/find-comment@v1
-        id: fc
-        with:
-          issue-number: ${{steps.pr.outputs.pr}}
-          body-includes: SAST scan result
-
-
-
-      - name: Create comment
-        # Break build if issue count > 0
-        if: ${{ steps.polaris_result.outputs.issues > 0 }}
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ steps.pr.outputs.pr }}
-          body: |
-            SAST scan result
-            Issues found: ${{steps.polaris_result.outputs.issues}}
-            Summary: ${{steps.polaris_result.outputs.summary-url}}
-          edit-mode: replace
+          echo "##[set-output name=critical;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Critical' )"
+          echo "##[set-output name=high;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.High' )"
+          echo "##[set-output name=medium;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Medium' )"
+          echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Low' )"      
       - uses: act10ns/slack@v1
         with:
          status: ${{ job.status }}
