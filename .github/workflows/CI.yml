@@ -6,7 +6,7 @@ on:
       - main
 jobs:
   build:
-    name: VAULT DEMO PIPELINE
+    name: node js workflow
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -90,11 +90,12 @@ jobs:
           echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Low' )"      
       - uses: act10ns/slack@v1
         with:
-#           - name: Result from "Send Message"
-          run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}"
-#          steps: ${{ toJson(steps) }}
+# #           - name: Result from "Send Message"
+#           run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}"
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
-#         if: always()  
+        if: always()  
           
           
 #       - uses: actions/checkout@v2       
