@@ -78,7 +78,7 @@ jobs:
           POLARIS_SERVER_URL: ${{secrets.POLARIS_SERVER_URL}}
         run: |
              export PATH=$PATH:$(pwd)/polaris_cli/$(ls ./polaris_cli)/bin
-             polaris analyze --coverity-ignore-capture-failure --upload-local-config --wait || true
+             polaris analyze --coverity-ignore-capture-failure --upload-local-config --wait 
       - if: ${{steps.polaris_scan}}
         name: Polaris Severity Issues
         id: polaris_result
@@ -91,7 +91,7 @@ jobs:
       - uses: act10ns/slack@v1
         with:
 # #           - name: Result from "Send Message"
-          run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}" || true
+          run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}" 
           
 #           status: ${{ job.status }}
 #           steps: ${{ toJson(steps) }}
