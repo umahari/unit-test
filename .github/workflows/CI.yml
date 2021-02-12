@@ -91,7 +91,7 @@ jobs:
       - uses: act10ns/slack@v1
         with:
 # #           - name: Result from "Send Message"
-          run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}"
+          run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}" || true
           
 #           status: ${{ job.status }}
 #           steps: ${{ toJson(steps) }}
