@@ -69,8 +69,10 @@ jobs:
         run: |
           export POLARIS_SERVER_URL=${{ secrets.POLARIS_SERVER_URL}}
           export POLARIS_ACCESS_TOKEN=${{ secrets.POLARIS_ACCESS_TOKEN}}
+          apt-get install wget -y
           wget -q https://ikea.polaris.synopsys.com/api/tools/polaris_cli-linux64.zip
-          unzip -j polaris_cli-linux64.zip -d /tmp
+          apt-get install unzip -y
+          unzip -j polaris_cli-linux64.zip -d /tmp/
           /tmp/polaris -c polaris.yml analyze -w --coverity-ignore-capture-failure
       - uses: act10ns/slack@v1
         with:
