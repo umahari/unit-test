@@ -100,15 +100,15 @@ jobs:
           Issues found: ${{steps.polaris_result.outputs.issues}}
           Summary: ${{steps.polaris_result.outputs.summary-url}}
          edit-mode: replace   
-      - uses: act10ns/slack@v1
-        with:
-# #           - name: Result from "Send Message"
-          run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}" 
+#       - uses: act10ns/slack@v1
+#         with:
+# # #           - name: Result from "Send Message"
+#           run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}" 
           
-#           status: ${{ job.status }}
-#           steps: ${{ toJson(steps) }}
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
-        if: always()  
+# #           status: ${{ job.status }}
+# #           steps: ${{ toJson(steps) }}
+#           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
+#         if: always()  
           
           
 #       - uses: actions/checkout@v2       
@@ -129,6 +129,26 @@ jobs:
 #          steps: ${{ toJson(steps) }}
 #          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
 #         if: always() 
+#  Blackduck-SCA:
+#     name: "Blackduck SCA"
+#     # needs: build
+#     runs-on: ubuntu-16.04
+#     # the build-and-test job might be skipped, we don't need to run this job then
+#     if: success() || failure()
+#     steps:        
+#       - uses: actions/checkout@v2
+#       - run: npm install
+#       - name: Software Composition Analysis with Black Duck
+#         uses: blackducksoftware/github-action@v2
+#         with:
+#           args: '--blackduck.url="${{ secrets.BLACKDUCK_URL}}" --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN}}" --detect.tools="DETECTOR" --logging.level.com.synopsys.integration="DEBUG" --detect.risk.report.pdf=true --detect.cleanup=false'
+          
+#       - id: upload-file
+#         uses: google-github-actions/upload-cloud-storage@main
+#         with:
+#           credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
+#           path: /home/runner/work/nodeJS_CICD_POC/nodeJS_CICD_POC/docker_web_app_0_0_1_BlackDuck_RiskReport.pdf
+#           destination: blackduckreport  
         
         
 
