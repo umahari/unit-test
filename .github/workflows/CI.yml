@@ -100,15 +100,15 @@ jobs:
 #           Issues found: ${{steps.polaris_result.outputs.issues}}
 #           Summary: ${{steps.polaris_result.outputs.summary-url}}
 #          edit-mode: replace   
-#       - uses: act10ns/slack@v1
-#         with:
+      - uses: act10ns/slack@v1
+        with:
 # # # #           - name: Result from "Send Message"
 #           run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}" 
           
-# # #           status: ${{ job.status }}
-# # #           steps: ${{ toJson(steps) }}
-#           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
-#         if: always()  
+          status: ${{ job.status }}
+          steps: ${{ steps.polaris_result.outputs.slack-result }}
+          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
+        if: always()  
 #       - name: Slack Notification
 #         uses:  act10ns/slack@v1
 #         env:
@@ -120,24 +120,24 @@ jobs:
 #            SLACK_USERNAME: sirinoti
 #            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
     
-      - name: 'Slack Notification Action'
-        description: 'Send notification to Slack'
-        author: 'Customer Web'
-        inputs:
-        GITHUB_TOKEN:
-          description: 'The GitHub token (only needed for PULL_REQUEST)'
-          required: false
-           PAYLOAD_TYPE:
-           description: 'The payload type: PULL_REQUEST, DEPLOY_FAILURE, NPM_AUDIT_FAILURE'  
-           required: true
-           SLACK_API_TOKEN:
-           description: 'The Slack API token'
-           required: true
-           runs:
-           using: 'node12'
-           main: 'dist/index.js' 
-            SLACK_CHANNEL: '#test'
-            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}   
+#       - name: 'Slack Notification Action'
+#         description: 'Send notification to Slack'
+#         author: 'Customer Web'
+#         inputs:
+#         GITHUB_TOKEN:
+#          description: 'The GitHub token (only needed for PUSH_REQUEST)'
+#         required: false
+#         PAYLOAD_TYPE:
+#          description: 'The payload type: PULL_REQUEST, DEPLOY_FAILURE, NPM_AUDIT_FAILURE'  
+#          required: true
+#         SLACK_API_TOKEN:
+#          description: 'The Slack API token'
+#          required: true
+#         runs:
+#        using: 'node12'
+#         main: 'dist/index.js' 
+#         SLACK_CHANNEL: '#test'
+#         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}   
           
           
 #       - uses: actions/checkout@v2       
