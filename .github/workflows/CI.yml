@@ -101,12 +101,14 @@ jobs:
 #           Summary: ${{steps.polaris_result.outputs.summary-url}}
 #          edit-mode: replace   
       - uses: act10ns/slack@v1
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
-# # # #           - name: Result from "Send Message"
-#           run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}" 
+
           
           status: ${{ job.status }}
           steps: ${{ steps.polaris_result.outputs.slack-result }}
+          channel: '#test'
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
         if: always()  
 #       - name: Slack Notification
@@ -179,7 +181,8 @@ jobs:
 #           path: /home/runner/work/nodeJS_CICD_POC/nodeJS_CICD_POC/docker_web_app_0_0_1_BlackDuck_RiskReport.pdf
 #           destination: blackduckreport  
         
-        
+        # # # #           - name: Result from "Send Message"
+#           run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}" 
 
 
       
