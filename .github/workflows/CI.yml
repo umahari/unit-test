@@ -88,4 +88,4 @@ jobs:
           SLACK_MESSAGE: 'Post Content : Static Analysis with Polaris:'
           SLACK_TITLE: Post Title
           SLACK_USERNAME: Notification
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL}}
