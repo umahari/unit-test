@@ -20,6 +20,7 @@ jobs:
          status: starting
          channel: '#test'
          if: always()
+         
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         id: setup_NodeJS
@@ -100,18 +101,18 @@ jobs:
 #           Issues found: ${{steps.polaris_result.outputs.issues}}
 #           Summary: ${{steps.polaris_result.outputs.summary-url}}
 #          edit-mode: replace   
-      - uses: act10ns/slack@v1
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        with:
+#       - uses: act10ns/slack@v1
+#         env:
+#           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#         with:
 
           
-          status: ${{ job.status }}
-          steps: ${{ tojson(severity) }}
-#           steps: ${{ steps.polaris_result.outputs.slack-result }}
-          channel: '#test'
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
-        if: always()  
+#           status: ${{ job.status }}
+#           steps: ${{ tojson(severity) }}
+# #           steps: ${{ steps.polaris_result.outputs.slack-result }}
+#           channel: '#test'
+#           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
+#         if: always()  
 #       - name: Slack Notification
 #         uses:  actions/slack@v1
 #         env:
