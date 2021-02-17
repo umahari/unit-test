@@ -25,3 +25,20 @@
 "outputName": "jest-junit.xml"
 }
 }
+{
+  "name": "slack",
+  "version": "1.0.0",
+  "scripts": {
+    "build-slack": "ncc build .github/actions/slack/src/index.ts -o .github/actions/slack/dist/ && git add .github/actions/slack/dist/index.js"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.25.1",
+    "husky": "4.3.0",
+    "typescript": "^4.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build-slack"
+    }
+  }
+}
