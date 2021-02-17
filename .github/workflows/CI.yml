@@ -113,7 +113,7 @@ jobs:
 #           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
 #         if: always()  
       - name: Slack Notification
-        uses:  actions/slack@v1
+        uses:  action/slack@v1
         env:
            SLACK_CHANNEL: '#test'
            SLACK_COLOR: '#3278BD'
