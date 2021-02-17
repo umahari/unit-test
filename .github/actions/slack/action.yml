@@ -1,1 +1,16 @@
-
+name: 'Slack Notification Action'
+description: 'Send notification to Slack'
+author: 'Customer Web'
+inputs:
+  GITHUB_TOKEN:
+    description: 'The GitHub token (only needed for PULL_REQUEST)'
+    required: false
+  PAYLOAD_TYPE:
+    description: 'The payload type: PULL_REQUEST, DEPLOY_FAILURE, NPM_AUDIT_FAILURE'
+    required: true
+  SLACK_API_TOKEN:
+    description: 'The Slack API token'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
