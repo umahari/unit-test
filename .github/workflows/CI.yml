@@ -13,14 +13,14 @@ jobs:
         node-version: [13.x]
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+#       ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     steps:
-      - uses: action/slack@v1
+      - uses: act10ns/slack@v1
         with:
          status: starting
          channel: '#test'
          if: always()
-      - uses: actions/checkout@v1
+      - uses: act10ns/slack@v1
       - name: Use Node.js ${{ matrix.node-version }}
         id: setup_NodeJS
         uses: actions/setup-node@v1
@@ -37,7 +37,7 @@ jobs:
         id: npm_test
         run: npm test
         continue-on-error: true
-      - uses: actions/slack@v1
+      - uses: act10ns/slack@v1
         with:
             status: ${{ job.status }}
             steps: ${{ toJson(steps) }}
@@ -54,7 +54,7 @@ jobs:
        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:        
       - name: Set up JDK 1.8 test 
-        uses: actions/setup-java@v1
+        uses: act10ns/slack@v1
         with:
           java-version: 1.8
 
@@ -100,28 +100,28 @@ jobs:
 #           Issues found: ${{steps.polaris_result.outputs.issues}}
 #           Summary: ${{steps.polaris_result.outputs.summary-url}}
 #          edit-mode: replace   
-#       - uses: act10ns/slack@v1
-#         env:
-#           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-#         with:
+      - uses: act10ns/slack@v1
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
 
           
-#           status: ${{ job.status }}
-#           steps: ${{ tojson(job) }}
-# #           steps: ${{ steps.polaris_result.outputs.slack-result }}
-#           channel: '#test'
-#           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
-#         if: always()  
-      - name: Slack Notification
-        uses:  actions/slack@v1
-        env:
-           SLACK_CHANNEL: '#test'
-           SLACK_COLOR: '#3278BD'
-           SLACK_ICON: https://github.com/polaris.png?size=48
-           SLACK_MESSAGE: 'Post Content :polaris:'
-           SLACK_TITLE: Post Title
-           SLACK_USERNAME: sirinoti
-           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          status: ${{ job.status }}
+          steps: ${{ tojson(job) }}
+#           steps: ${{ steps.polaris_result.outputs.slack-result }}
+          channel: '#test'
+          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
+        if: always()  
+#       - name: Slack Notification
+#         uses:  actions/slack@v1
+#         env:
+#            SLACK_CHANNEL: '#test'
+#            SLACK_COLOR: '#3278BD'
+#            SLACK_ICON: https://github.com/polaris.png?size=48
+#            SLACK_MESSAGE: 'Post Content :polaris:'
+#            SLACK_TITLE: Post Title
+#            SLACK_USERNAME: sirinoti
+#            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
     
     
     
