@@ -101,18 +101,23 @@ jobs:
 #           Issues found: ${{steps.polaris_result.outputs.issues}}
 #           Summary: ${{steps.polaris_result.outputs.summary-url}}
 #          edit-mode: replace   
-      - uses: act10ns/slack@v1
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        with:
+#       - uses: act10ns/slack@v1
+#         env:
+#           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#         with:
 
           
-          status: ${{ job.status }}
-          steps: ${{ tojson(job) }}
-#           steps: ${{ steps.polaris_result.outputs.slack-result }}
-          channel: '#test'
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
-        if: always()  
+#           status: ${{ job.status }}
+#           steps: ${{ tojson(job) }}
+# #           steps: ${{ steps.polaris_result.outputs.slack-result }}
+#           channel: '#test'
+#           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
+#         if: always()  
+        
+      - name: Simple notification
+        uses: adamkdean/simple-slack-notify@master
+        with:
+          text: 'This is the simplest notification'
 #       - name: Slack Notification
 #         uses:  actions/slack@v1
 #         env:
