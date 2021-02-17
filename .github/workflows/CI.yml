@@ -100,28 +100,28 @@ jobs:
 #           Issues found: ${{steps.polaris_result.outputs.issues}}
 #           Summary: ${{steps.polaris_result.outputs.summary-url}}
 #          edit-mode: replace   
-      - uses: act10ns/slack@v1
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        with:
+#       - uses: act10ns/slack@v1
+#         env:
+#           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#         with:
 
           
-          status: ${{ job.status }}
-          steps: ${{ tojson(job) }}
-#           steps: ${{ steps.polaris_result.outputs.slack-result }}
-          channel: '#test'
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
-        if: always()  
-#       - name: Slack Notification
-#         uses:  act10ns/slack@v1
-#         env:
-#            SLACK_CHANNEL: '#test'
-#            SLACK_COLOR: '#3278BD'
-# #            SLACK_ICON: https://github.com/polaris.png?size=48
-#            SLACK_MESSAGE: 'Post Content :polaris:'
-#            SLACK_TITLE: Post Title
-#            SLACK_USERNAME: sirinoti
-#            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+#           status: ${{ job.status }}
+#           steps: ${{ tojson(job) }}
+# #           steps: ${{ steps.polaris_result.outputs.slack-result }}
+#           channel: '#test'
+#           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
+#         if: always()  
+      - name: Slack Notification
+        uses:  actions/slack@v1
+        env:
+           SLACK_CHANNEL: '#test'
+           SLACK_COLOR: '#3278BD'
+           SLACK_ICON: https://github.com/polaris.png?size=48
+           SLACK_MESSAGE: 'Post Content :polaris:'
+           SLACK_TITLE: Post Title
+           SLACK_USERNAME: sirinoti
+           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
     
 #       - name: 'Slack Notification Action'
 #         description: 'Send notification to Slack'
