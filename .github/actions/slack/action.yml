@@ -1,4 +1,5 @@
  - name: Slack Notification
+        uses: action/checkout@v1
         uses:  action/slack@v1
         env:
            SLACK_CHANNEL: '#test'
