@@ -1,5 +1,5 @@
  - name: Slack Notification
-        uses:  actions/slack@v1
+        uses:  action/slack@v1
         env:
            SLACK_CHANNEL: '#test'
            SLACK_COLOR: '#3278BD'
