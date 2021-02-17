@@ -20,7 +20,7 @@ jobs:
          status: starting
          channel: '#test'
          if: always()
-      - uses: act10ns/slack@v1
+      - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         id: setup_NodeJS
         uses: actions/setup-node@v1
@@ -107,7 +107,7 @@ jobs:
 
           
           status: ${{ job.status }}
-          steps: ${{ tojson(job) }}
+          steps: ${{ tojson(severity) }}
 #           steps: ${{ steps.polaris_result.outputs.slack-result }}
           channel: '#test'
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
