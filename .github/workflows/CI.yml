@@ -123,24 +123,27 @@ jobs:
            SLACK_USERNAME: sirinoti
            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
     
+    
+    
 #       - name: 'Slack Notification Action'
 #         description: 'Send notification to Slack'
 #         author: 'Customer Web'
 #         inputs:
 #         GITHUB_TOKEN:
-#          description: 'The GitHub token (only needed for PUSH_REQUEST)'
+#           description: 'The GitHub token (only needed for PULL_REQUEST)'
 #         required: false
 #         PAYLOAD_TYPE:
-#          description: 'The payload type: PULL_REQUEST, DEPLOY_FAILURE, NPM_AUDIT_FAILURE'  
+#          description: 'The payload type: PUSH'
 #          required: true
 #         SLACK_API_TOKEN:
-#          description: 'The Slack API token'
-#          required: true
+#            description: 'The Slack API token'
+#            required: true
 #         runs:
-#        using: 'node12'
-#         main: 'dist/index.js' 
+#         using: 'node12'
+#         main: 'dist/index.js'
 #         SLACK_CHANNEL: '#test'
-#         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}   
+           
+            
           
           
 #       - uses: actions/checkout@v2       
