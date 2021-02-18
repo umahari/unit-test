@@ -1,4 +1,4 @@
-# .github/workflows/deploy.yaml nodejs app.
+# .github/workflows/deploy.yaml nodejs app
 name: Build and Push 
 on:
   push:
@@ -115,7 +115,7 @@ jobs:
         uses: adamkdean/simple-slack-notify@master
         with:
           channel: '#test'
-          text: 'This is the simplest notification'
+#           text: 'This is the simplest notification'
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
 #       - name: Slack Notification
 #         uses:  actions/slack@v1
