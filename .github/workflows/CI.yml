@@ -120,9 +120,9 @@ jobs:
           /tmp/polaris -c polaris.yml analyze -w --coverity-ignore-capture-failure
       - uses: act10ns/slack@v1
         with:
-         status: ${{ job.status }}
-         steps: ${{ toJson(job) }}
-         slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+            status: ${{ job.status }}
+            steps: ${{ toJson(steps) }}
+            slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always() 
 #     
         
