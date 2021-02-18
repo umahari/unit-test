@@ -114,7 +114,9 @@ jobs:
       - name: Simple notification
         uses: adamkdean/simple-slack-notify@master
         with:
+          channel: '#test'
           text: 'This is the simplest notification'
+          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
 #       - name: Slack Notification
 #         uses:  actions/slack@v1
 #         env:
