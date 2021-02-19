@@ -79,7 +79,7 @@ jobs:
           POLARIS_SERVER_URL: ${{secrets.POLARIS_SERVER_URL}}
         run: |
              export PATH=$PATH:$(pwd)/polaris_cli/$(ls ./polaris_cli)/bin
-             polaris analyze --coverity-ignore-capture-failure --upload-local-config --wait 
+             polaris analyze --coverity-ignore-capture-failure --upload-local-config --wait  -f json -o test-result.json
       - if: ${{steps.polaris_scan}}
         name: Polaris Severity Issues
         id: polaris_result
