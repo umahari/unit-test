@@ -124,7 +124,7 @@ jobs:
                   }]
                 }]
               }
-          text: 'Hello'
+         
           color: 'danger'
 #       - name: Send message to Slack API       
 #         uses: archive/github-actions-slack@v2.0.0
