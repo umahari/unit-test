@@ -90,6 +90,15 @@ jobs:
           echo "##[set-output name=medium;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Medium' )"
           echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Low' )"   
         
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+     
+          sarif_file: polaris-scan-results.sarif.json
+
+
+
      
       - name: Specifying what to panic about notification
         uses: adamkdean/simple-slack-notify@master
