@@ -89,6 +89,16 @@ jobs:
           echo "##[set-output name=high;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.High' )"
           echo "##[set-output name=medium;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Medium' )"
           echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Low' )"   
+        
+      - name: Send message to Slack API       
+        uses: archive/github-actions-slack@v2.0.0
+        id: notify
+        with:
+         slack-bot-user-oauth-access-token: xapp-1-A01NGGBSNH4-1756563223383-e1812188c486c3a6c37afca2f105d544d47012f911102b8d382a44e47d95b8c9
+         slack-channel: A01NGGBSNH4
+         slack-text: Hello!
+      - name: Result from "Send Message"
+        run: echo "The result was ${{ steps.notifyt.outputs.slack-result }}"
 
 #       - name: Upload SARIF file
 #         uses: github/codeql-action/upload-sarif@v1
@@ -111,17 +121,17 @@ jobs:
 #           Issues found: ${{steps.polaris_result.outputs.issues}}
 #           Summary: ${{steps.polaris_result.outputs.summary-url}}
 #          edit-mode: replace   
-      - uses: act10ns/slack@v1
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        with:
+#       - uses: act10ns/slack@v1
+#         env:
+#           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#         with:
 
           
-          status: ${{ job.status }}
-#           steps: ${{ steps.polaris_result.outputs.slack-result }}
-          channel: '#test'
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
-        if: always()  
+#           status: ${{ job.status }}
+# #           steps: ${{ steps.polaris_result.outputs.slack-result }}
+#           channel: '#test'
+#           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
+#         if: always()  
         
         
 #       - name: Slack Notification
