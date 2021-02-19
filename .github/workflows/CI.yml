@@ -90,21 +90,14 @@ jobs:
           echo "##[set-output name=medium;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Medium' )"
           echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Low' )"   
         
-      - name: Send message to Slack API   
-        uses: archive/github-actions-slack@v2.0.0
-        id: notify
-        with:
-          slack-bot-user-oauth-access-token: xoxb-728460929616-1725311826931-aMcfcBrQravfJ6QNCSs9ea57
-          slack-channel: C01MH08ECLU
-          slack-text: Hello!
-      - name: Result from "Send Message"
-        run: echo "The result was ${{ steps.notify.outputs.slack-result }}
+     
+     
 #       - name: Send message to Slack API       
 #         uses: archive/github-actions-slack@v2.0.0
 #         id: notify
 #         with:
 #          slack-bot-user-oauth-access-token: xapp-1-A01NGGBSNH4-1756563223383-e1812188c486c3a6c37afca2f105d544d47012f911102b8d382a44e47d95b8c9
-#          slack-channel: A01NGGBSNH4
+#          slack-channel: 
 #          slack-text: Hello!
 #       - name: Result from "Send Message"
 #         run: echo "The result was ${{ steps.notifyt.outputs.slack-result }}"
