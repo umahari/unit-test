@@ -53,6 +53,7 @@ jobs:
     env:
        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:        
+      
       - name: Set up JDK 1.8 test 
         uses: actions/setup-java@v1
         with:
@@ -88,7 +89,17 @@ jobs:
           echo "##[set-output name=high;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.High' )"
           echo "##[set-output name=medium;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Medium' )"
           echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Low' )"   
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          # Path to SARIF file relative to the root of the repository
+          sarif_file: polaris-scan-results.sarif.json
+
+
+
 #       - name: Create comment
+ 
 #       # Break build if issue count > 0
 #         if: ${{ steps.polaris_result.outputs.issues > 0 }}
 #         uses: peter-evans/create-or-update-comment@v1
@@ -111,6 +122,8 @@ jobs:
           channel: '#test'
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
         if: always()  
+        
+        
 #       - name: Slack Notification
 #         uses:  act10ns/slack@v1
 #         env:
