@@ -80,16 +80,7 @@ jobs:
         run: |
              export PATH=$PATH:$(pwd)/polaris_cli/$(ls ./polaris_cli)/bin
              polaris analyze --coverity-ignore-capture-failure --upload-local-config --wait 
-      - if: ${{steps.polaris_scan}}
-        name: Polaris Severity Issues
-        id: polaris_result
-        run: |
-          #cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary'
-          echo "##[set-output name=critical;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Critical' )"
-          echo "##[set-output name=high;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.High' )"
-          echo "##[set-output name=medium;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Medium' )"
-          echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Low' )"   
-        
+      
 
 
 
@@ -99,7 +90,9 @@ jobs:
         with:
           channel: '#test'
           username: 'siri'
-          text: echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Low' )"   
+          status: ${{ job.status }}
+          notify_when: 'success'
+          text: hello Sirisha
         
 
 
