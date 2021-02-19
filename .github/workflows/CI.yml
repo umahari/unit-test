@@ -90,9 +90,8 @@ jobs:
         with:
           channel: '#test'
           username: 'siri'
-          status: ${{ job.status }}
-          notify_when: 'success'
-          text: hello Sirisha
+          
+          text: ${{ job.status }}
         
 
 
