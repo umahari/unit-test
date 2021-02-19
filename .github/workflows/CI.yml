@@ -11,15 +11,15 @@ jobs:
     strategy:
       matrix:
         node-version: [13.x]
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-#       ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+#     env:
+#       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+# #       ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     steps:
       - uses: act10ns/slack@v1
-        with:
-         status: starting
-         channel: '#test'
-         if: always()
+#         with:
+#          status: starting
+#          channel: '#test'
+#          if: always()
          
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -42,17 +42,17 @@ jobs:
         with:
             status: ${{ job.status }}
             steps: ${{ toJson(steps) }}
-            slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always() 
-        env: 
-         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
+#             slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+#         if: always() 
+#         env: 
+#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
   Polaris-scan:
     name: "Polaris Scan"
     runs-on: ubuntu-latest
     # the build-and-test job might be skipped, we don't need to run this job then
     if: success() || failure()
-    env:
-       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#     env:
+#        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:        
       - name: Set up JDK 1.8 test 
         uses: act10ns/slack@v1
