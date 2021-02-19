@@ -91,7 +91,7 @@ jobs:
           channel: '#test'
           username: 'siri'
           
-          text: ${{ job.IssuesBySeverity}
+          text: ${{ /home/runner/work/unit-test/unit-test/.synopsys/polaris/cli-scan.json}}
         
 
 
