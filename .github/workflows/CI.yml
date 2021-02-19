@@ -91,7 +91,7 @@ jobs:
           channel: '#test'
           username: 'siri'
           
-          text: ${{ job.status }}
+          text: ${{ job.IssuesBySeverity}
         
 
 
