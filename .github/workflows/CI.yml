@@ -118,7 +118,7 @@ jobs:
 
           
           status: ${{ job.status }}
-          steps: ${{ steps.polaris_result.outputs.slack-result }}
+#           steps: ${{ steps.polaris_result.outputs.slack-result }}
           channel: '#test'
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }} 
         if: always()  
