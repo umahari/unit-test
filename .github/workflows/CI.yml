@@ -99,7 +99,10 @@ jobs:
         with:
           channel: '#test'
           username: 'siri'
-          text: -u polaris_result.json
+          text: echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Low' )"   
+        
+
+
          
           color: 'danger'
 #       - name: Send message to Slack API       
