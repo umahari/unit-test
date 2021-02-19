@@ -1,2 +1,42 @@
-https://www.synopsys.com/blogs/software-security/synopsys-detect-github-action-sast-sca/
-https://github.com/marketplace/actions/synopsys-intelligent-security-scan
+https://stackoverflow.com/questions/64283032/how-to-pass-the-json-file-in-github-action
+https://github.com/marketplace/actions/http-request-action
+
+
+https://github.com/marketplace/actions/slack-messaging   --- useful try this for sure
+
+
+
+- uses: 8398a7/action-slack@v2
+  with:
+    status: custom
+    payload: |
+      {
+        text: "Custom Field Check",
+        attachments: [{
+          "author_name": "8398a7@action-slack", // json
+          fallback: 'fallback',
+          color: 'good',
+          title: 'CI Result',
+          text: 'Succeeded',
+          fields: [{
+            title: 'lower case',
+            value: 'LOWER CASE CHECK'.toLowerCase(),
+            short: true
+          },
+          {
+            title: 'reverse',
+            value: 'gnirts esrever'.split('').reverse().join(''),
+            short: true
+          },
+          {
+            title: 'long title1',
+            value: 'long value1',
+            short: false
+          }],
+          actions: [{
+          }]
+        }]
+      }
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # optional
+    SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
