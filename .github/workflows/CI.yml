@@ -91,7 +91,13 @@ jobs:
           echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Low' )"   
         
      
-     
+      - name: Specifying what to panic about notification
+        uses: adamkdean/simple-slack-notify@master
+        with:
+          channel: '#test'
+          username: 'siri'
+          text: 'Hello'
+          color: 'danger'
 #       - name: Send message to Slack API       
 #         uses: archive/github-actions-slack@v2.0.0
 #         id: notify
@@ -179,13 +185,13 @@ jobs:
 #           wget -q https://ikea.polaris.synopsys.com/api/tools/polaris_cli-linux64.zip
 #           unzip -j polaris_cli-linux64.zip -d /tmp
 #           /tmp/polaris -c polaris.yml analyze -w --coverity-ignore-capture-failure
-      - uses: act10ns/slack@v1
-        with:
-#          status: ${{ job.status }}
-#          steps: ${{ toJson(steps) }}
-         slack_text: Hello!
-         slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always() 
+#       - uses: act10ns/slack@v1
+#         with:
+# #          status: ${{ job.status }}
+# #          steps: ${{ toJson(steps) }}
+#          slack_text: Hello!
+#          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+#         if: always() 
 #  Blackduck-SCA:
 #     name: "Blackduck SCA"
 #     # needs: build
