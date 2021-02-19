@@ -96,7 +96,7 @@ jobs:
         with:
           channel: '#test'
           username: 'siri'
-          payload: |
+          text: |
             {
                 text: "Custom Field Check",
                 attachments: [{
