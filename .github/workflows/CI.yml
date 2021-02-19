@@ -118,13 +118,13 @@ jobs:
 #           wget -q https://ikea.polaris.synopsys.com/api/tools/polaris_cli-linux64.zip
 #           unzip -j polaris_cli-linux64.zip -d /tmp
 #           /tmp/polaris -c polaris.yml analyze -w --coverity-ignore-capture-failure
-      - uses: act10ns/slack@v1
-        with:
-            status: ${{ job.status }}
-            steps: ${{ toJson(steps) }}
-            slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always() 
-#     
+#       - uses: act10ns/slack@v1
+#         with:
+#             status: ${{ job.status }}
+#             steps: ${{ toJson(steps) }}
+#             slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+#         if: always() 
+# #     
         
 #       - name: Simple notification
 #         uses: adamkdean/simple-slack-notify@master
