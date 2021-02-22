@@ -95,8 +95,8 @@ jobs:
         uses: adamkdean/simple-slack-notify@master
         with:
           channel: '#test'
-          username: 'siri'
-          text: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }}"  
+          username: 'Polaris-result'
+          text: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n IssueSummaryURL: ${{ steps.polaris_result.outputs.issuesummaryurl }} \n Please Check and Fix the Issues"  
           color: 'danger' 
           
 #       - name: Specifying what to panic about notification
@@ -262,8 +262,6 @@ jobs:
 #           path: /home/runner/work/nodeJS_CICD_POC/nodeJS_CICD_POC/docker_web_app_0_0_1_BlackDuck_RiskReport.pdf
 #           destination: blackduckreport  
         
-        # # # #           - name: Result from "Send Message"
-#           run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}" 
-
+     
 
       
