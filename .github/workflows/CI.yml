@@ -95,8 +95,8 @@ jobs:
         uses: adamkdean/simple-slack-notify@master
         with:
           channel: '#test'
-          username: 'Polaris-result'
-          text: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n IssueSummaryURL: ${{ steps.polaris_result.outputs.issuesummaryurl }} \n Please Check and Fix the Issues"  
+          username: 'PolariSAST'
+          text: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n IssueSummaryURL: ${{ steps.polaris_result.outputs.summaryurl }} \n Please Check and Fix the Issues"  
           color: 'danger' 
           
 #       - name: Specifying what to panic about notification
