@@ -131,8 +131,6 @@ jobs:
 #                 }]
 #               }
           text: 'Hello'
-          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
-    
           color: 'danger'
 #           text: 'Hello'
 #           color: 'danger'
