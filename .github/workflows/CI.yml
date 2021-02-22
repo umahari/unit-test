@@ -101,7 +101,7 @@ jobs:
         with:
           channel: '#test'
           username: 'siri'
-          slack-message-timestamp: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
+          slack-message: ${{ fromJson(steps.polaris_result.outputs.slack-result).response.message }}
 
 #           run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}"
 
