@@ -80,23 +80,24 @@ jobs:
         run: |
              export PATH=$PATH:$(pwd)/polaris_cli/$(ls ./polaris_cli)/bin
              polaris analyze --coverity-ignore-capture-failure --upload-local-config --wait 
-      
-
-
-
+      - if: ${{steps.polaris_scan}}
+        name: Polaris Severity Issues
+        id: polaris_result
+        run: |
+          #cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary'
+          echo "##[set-output name=critical;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Critical' )"
+          echo "##[set-output name=high;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.High' )"
+          echo "##[set-output name=medium;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Medium' )"
+          echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Low' )"   
+        
      
       - name: Specifying what to panic about notification
         uses: adamkdean/simple-slack-notify@master
         with:
           channel: '#test'
           username: 'siri'
-          
-          text: ${{ job.status}}
-        
-
-
-         
-          color: 'danger'
+            text: Hello!
+#           text: -u polaris_result.json
 #       - name: Send message to Slack API       
 #         uses: archive/github-actions-slack@v2.0.0
 #         id: notify
