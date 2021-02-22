@@ -85,10 +85,10 @@ jobs:
         id: polaris_result
         run: |
           #cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary'
-          echo "##[set-output name=critical;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Critical' )"
-          echo "##[set-output name=high;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.High' )"
-          echo "##[set-output name=medium;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Medium' )"
-          echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Low' )"   
+          echo "##[set-output name=critical;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.critical' )"
+          echo "##[set-output name=high;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.high' )"
+          echo "##[set-output name=medium;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.medium' )"
+          echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.low' )"   
 
     
       - name: Specifying what to panic about notification
