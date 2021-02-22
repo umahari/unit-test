@@ -131,6 +131,7 @@ jobs:
 #                 }]
 #               }
           text: 'Hello'
+          message_id: ${{ steps.polaris_result.outputs.message_id }}
           color: 'danger'
 #           text: 'Hello'
 #           color: 'danger'
