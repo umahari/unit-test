@@ -96,7 +96,7 @@ jobs:
         with:
           channel: '#test'
           username: 'PolariSAST'
-          text: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n IssueSummaryURL: ${{ steps.polaris_result.outputs.summary-url }} \n Please Check and Fix the Issues"  
+          text: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n IssueSummaryURL: ${{ steps.polaris_result.outputs.SLACK_WEBHOOK_URL }} \n Please Check and Fix the Issues"  
           color: 'danger' 
           
 
