@@ -100,36 +100,39 @@ jobs:
         uses: adamkdean/simple-slack-notify@master
         with:
           channel: '#test'
-          username: 'siri'
-          payload: |
-            {
-                text: "Custom Field Check",
-                attachments: [{
-                  "author_name": "8398a7@action-slack", // json
-                  fallback: 'fallback',
-                  color: 'good',
-                  title: 'CI Result',
-                  text: 'Succeeded',
-                  fields: [{
-                    title: 'lower case',
-                    value: 'LOWER CASE CHECK'.toLowerCase(),
-                    short: true
-                  },
-                  {
-                    title: 'reverse',
-                    value: 'gnirts esrever'.split('').reverse().join(''),
-                    short: true
-                  },
-                  {
-                    title: 'long title1',
-                    value: 'long value1',
-                    short: false
-                  }],
-                  actions: [{
-                  }]
-                }]
-              }
+          username: 'siri
+
+#           payload: |
+#             {
+#                 text: "Custom Field Check",
+#                 attachments: [{
+#                   "author_name": "8398a7@action-slack", // json
+#                   fallback: 'fallback',
+#                   color: 'good',
+#                   title: 'CI Result',
+#                   text: 'Succeeded',
+#                   fields: [{
+#                     title: 'lower case',
+#                     value: 'LOWER CASE CHECK'.toLowerCase(),
+#                     short: true
+#                   },
+#                   {
+#                     title: 'reverse',
+#                     value: 'gnirts esrever'.split('').reverse().join(''),
+#                     short: true
+#                   },
+#                   {
+#                     title: 'long title1',
+#                     value: 'long value1',
+#                     short: false
+#                   }],
+#                   actions: [{
+#                   }]
+#                 }]
+#               }
           text: 'Hello'
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
+    
           color: 'danger'
 #           text: 'Hello'
 #           color: 'danger'
