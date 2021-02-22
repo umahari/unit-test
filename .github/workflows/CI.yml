@@ -96,7 +96,7 @@ jobs:
         with:
           channel: '#test'
           username: 'siri'
-          text: "The result was ${{ steps.polaris_result.outputs.critical }}"  
+          text: " number of findings in critical ${{ steps.polaris_result.outputs.critical }} \n number of findings in high ${{ steps.polaris_result.outputs.high }} \n number of findings in medium ${{ steps.polaris_result.outputs.medium }} \n number of findings in low ${{ steps.polaris_result.outputs.low }}"  
           color: 'danger' 
           
 #       - name: Specifying what to panic about notification
