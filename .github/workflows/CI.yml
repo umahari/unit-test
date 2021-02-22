@@ -100,7 +100,8 @@ jobs:
         uses: adamkdean/simple-slack-notify@master
         with:
           channel: '#test'
-          username: 'siri
+          username: 'siri'
+          run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}"
 
 #           payload: |
 #             {
@@ -131,7 +132,6 @@ jobs:
 #                 }]
 #               }
           text: 'Hello'
-          message_id: ${{ steps.polaris_result.outputs.message_id }}
           color: 'danger'
 #           text: 'Hello'
 #           color: 'danger'
