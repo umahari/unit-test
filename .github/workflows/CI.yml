@@ -101,7 +101,9 @@ jobs:
         with:
           channel: '#test'
           username: 'siri'
-          run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}"
+          slack-message-timestamp: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
+
+#           run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}"
 
 #           payload: |
 #             {
