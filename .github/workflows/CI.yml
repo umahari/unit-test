@@ -89,6 +89,20 @@ jobs:
           echo "##[set-output name=high;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.High' )"
           echo "##[set-output name=medium;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Medium' )"
           echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Low' )"   
+
+      - name: Run tests
+  # ... your test step here
+      - name: Notify slack success
+        if: success()
+        env:
+         slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+    # Updates existing message from the first step
+           slack-message: ${{ steps. polaris_result.outputs.slack-result }}
+           channel: '#test'
+           status: SUCCESS
+           color: good
 #       - name: Specifying what to panic about notification
 #         uses: adamkdean/simple-slack-notify@master
 #         with:
@@ -96,12 +110,12 @@ jobs:
 #           username: 'siri'
 #           text: echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.IssuesBySeverity.Low' )"   
 #           color: 'danger' 
-      - name: Specifying what to panic about notification
-        uses: adamkdean/simple-slack-notify@master
-        with:
-          channel: '#test'
-          username: 'siri'
-          slack-message: ${{ fromJson(steps.polaris_result.outputs.slack-result).response.message }}
+#       - name: Specifying what to panic about notification
+#         uses: adamkdean/simple-slack-notify@master
+#         with:
+#           channel: '#test'
+#           username: 'siri'
+#           slack-message: ${{ fromJson(steps.polaris_result.outputs.slack-result).response.message }}
 
 #           run: echo "The result was ${{ steps.polaris_result.outputs.slack-result }}"
 
@@ -133,8 +147,8 @@ jobs:
 #                   }]
 #                 }]
 #               }
-          text: 'Hello'
-          color: 'danger'
+#           text: 'Hello'
+#           color: 'danger'
 #           text: 'Hello'
 #           color: 'danger'
 #       - name: Specifying what to panic about notification
