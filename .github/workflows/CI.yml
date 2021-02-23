@@ -36,7 +36,7 @@ jobs:
       - name: npm Test
         id: npm_test
         run: npm test
-        continue-on-error: true
+#         continue-on-error: true
       - uses: act10ns/slack@v1
         with:
             status: ${{ job.status }}
@@ -96,30 +96,30 @@ jobs:
         with:
           channel: '#test'
           username: 'PolariSAST'
-          text: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n IssueSummaryURL: ${{ steps.polaris_result.outputs }} \n Please Check and Fix the Issues"  
+          text: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
           color: 'danger' 
           
 
-    Blackduck-SCA:  
-      name: "Blackduck SCA"
-    # needs: build
-      runs-on: ubuntu-16.04
-   # the build-and-test job might be skipped, we don't need to run this job then
-      if: success() || failure()
-      steps:        
-         - uses: actions/checkout@v2
-         - run: npm install
-         - name: Software Composition Analysis with Black Duck
-           uses: blackducksoftware/github-action@v2
-      with:
-          args: '--blackduck.url="${{ secrets.BLACKDUCK_URL}}" --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN}}" --detect.tools="DETECTOR" --logging.level.com.synopsys.integration="DEBUG" --detect.risk.report.pdf=true --detect.cleanup=false'
-          name: "Upload file"
-          id: upload-file
-          uses: google-github-actions/upload-cloud-storage@main
-          with:
-           credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
-           path: /home/runner/work/nodeJS_CICD_POC/nodeJS_CICD_POC/docker_web_app_0_0_1_BlackDuck_RiskReport.pdf
-           destination: blackduckreport  
+#     Blackduck-SCA:  
+#       name: "Blackduck SCA"
+#     # needs: build
+#       runs-on: ubuntu-16.04
+#    # the build-and-test job might be skipped, we don't need to run this job then
+#       if: success() || failure()
+#       steps:        
+#          - uses: actions/checkout@v2
+#          - run: npm install
+#          - name: Software Composition Analysis with Black Duck
+#            uses: blackducksoftware/github-action@v2
+#       with:
+#           args: '--blackduck.url="${{ secrets.BLACKDUCK_URL}}" --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN}}" --detect.tools="DETECTOR" --logging.level.com.synopsys.integration="DEBUG" --detect.risk.report.pdf=true --detect.cleanup=false'
+#           name: "Upload file"
+#           id: upload-file
+#           uses: google-github-actions/upload-cloud-storage@main
+#           with:
+#            credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
+#            path: /home/runner/work/nodeJS_CICD_POC/nodeJS_CICD_POC/docker_web_app_0_0_1_BlackDuck_RiskReport.pdf
+#            destination: blackduckreport  
         
      
 
