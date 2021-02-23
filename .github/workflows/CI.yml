@@ -76,13 +76,13 @@ jobs:
          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always() 
         
-      - name: Slack Notification
-        uses: act10ns/slack@v1
-        env:
-          SLACK_CHANNEL: github-actions
-          SLACK_COLOR: '#3278BD'
-        #  SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_MESSAGE: 'Post Content :Job issue summary:'
-          SLACK_TITLE: Post Title
-          SLACK_USERNAME: Notification
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL}}
+#       - name: Slack Notification
+#         uses: act10ns/slack@v1
+#         env:
+#           SLACK_CHANNEL: github-actions
+#           SLACK_COLOR: '#3278BD'
+#         #  SLACK_ICON: https://github.com/rtCamp.png?size=48
+#           SLACK_MESSAGE: 'Post Content :Job issue summary:'
+#           SLACK_TITLE: Post Title
+#           SLACK_USERNAME: Notification
+#           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL}}
