@@ -117,7 +117,7 @@ jobs:
           
         # -- check the Blackduck scan results and break the build as per the policies defined in BD
       - name: Break the build if any Critical and High issues are reported 
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: |
             AUTH=$(curl -X POST \
                 --header "Accept: application/vnd.blackducksoftware.user-4+json" \
