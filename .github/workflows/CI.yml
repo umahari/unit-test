@@ -45,60 +45,70 @@ jobs:
         if: always() 
         env: 
          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
-  Polaris-scan:
-    name: "Polaris Scan"
-    runs-on: ubuntu-latest
-    # the build-and-test job might be skipped, we don't need to run this job then
-    if: success() || failure()
-    env:
-       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-    steps:        
+#   Polaris-scan:
+#     name: "Polaris Scan"
+#     runs-on: ubuntu-latest
+#     # the build-and-test job might be skipped, we don't need to run this job then
+#     if: success() || failure()
+#     env:
+#        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#     steps:        
       
-      - name: Set up JDK 1.8 test 
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
+#       - name: Set up JDK 1.8 test 
+#         uses: actions/setup-java@v1
+#         with:
+#           java-version: 1.8
 
 
 
-      - name: Download Polaris_CLI
-        uses: carlosperate/download-file-action@v1.0.3
-        with:
-          file-url: 'https://ikea.polaris.synopsys.com/api/tools/polaris_cli-linux64.zip'
-          file-name: 'polaris_cli-linux64.zip'
+#       - name: Download Polaris_CLI
+#         uses: carlosperate/download-file-action@v1.0.3
+#         with:
+#           file-url: 'https://ikea.polaris.synopsys.com/api/tools/polaris_cli-linux64.zip'
+#           file-name: 'polaris_cli-linux64.zip'
 
 
 
-      - name: Unzip Polaris_CLI zip file
-        run: |
-             unzip polaris_cli-linux64.zip -d ./polaris_cli
-      - name: Run Polaris Scan
-        id: polaris_scan
-        env:
-          POLARIS_ACCESS_TOKEN: ${{secrets.POLARIS_ACCESS_TOKEN}}
-          POLARIS_SERVER_URL: ${{secrets.POLARIS_SERVER_URL}}
-        run: |
-             export PATH=$PATH:$(pwd)/polaris_cli/$(ls ./polaris_cli)/bin
-             polaris analyze --coverity-ignore-capture-failure --upload-local-config --wait 
-      - if: ${{steps.polaris_scan}}
-        name: Polaris Severity Issues
-        id: polaris_result
-        run: |
-          #cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary'
-          echo "##[set-output name=critical;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.critical' )"
-          echo "##[set-output name=high;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.high' )"
-          echo "##[set-output name=medium;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.medium' )"
-          echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.low' )"   
+#       - name: Unzip Polaris_CLI zip file
+#         run: |
+#              unzip polaris_cli-linux64.zip -d ./polaris_cli
+#       - name: Run Polaris Scan
+#         id: polaris_scan
+#         env:
+#           POLARIS_ACCESS_TOKEN: ${{secrets.POLARIS_ACCESS_TOKEN}}
+#           POLARIS_SERVER_URL: ${{secrets.POLARIS_SERVER_URL}}
+#         run: |
+#              export PATH=$PATH:$(pwd)/polaris_cli/$(ls ./polaris_cli)/bin
+#              polaris analyze --coverity-ignore-capture-failure --upload-local-config --wait 
+#       - if: ${{steps.polaris_scan}}
+#         name: Polaris Severity Issues
+#         id: polaris_result
+#         run: |
+#           #cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary'
+#           echo "##[set-output name=critical;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.critical' )"
+#           echo "##[set-output name=high;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.high' )"
+#           echo "##[set-output name=medium;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.medium' )"
+#           echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.low' )"   
 
     
-      - name: Specifying what to panic about notification
-        uses: adamkdean/simple-slack-notify@master
-        with:
-          channel: '#test'
-          username: 'PolariSAST'
-          text: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
-          color: 'danger' 
-          
+#       - name: Specifying what to panic about notification
+#         uses: adamkdean/simple-slack-notify@master
+#         with:
+#           channel: '#test'
+#           username: 'PolariSAST'
+#           text: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
+#           color: 'danger' 
+        
+      - name: Blackduck-SCA Scan
+        uses: blackducksoftware/github-action@2.0.0
+        with: 
+         args: |
+          --blackduck.url="${{ secrets.BLACKDUCK_URL}}" \
+          --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN}}" \
+          --logging.level.com.synopsys.integration="DEBUG" \
+          --detect.tools="DETECTOR" \
+          --detect.project.name="$REPOSITORY_NAME" \
+          --detect.project.version.distribution="SAAS" \  
 
 #     Blackduck-SCA:  
 #       name: "Blackduck SCA"
