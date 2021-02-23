@@ -146,7 +146,7 @@ jobs:
             SLACK_MESSAGE: 'Critical or High Issues found in ${{ github.repository }}'
             SLACK_TITLE: 'Blackduck scan'
             SLACK_USERNAME: 'Blackduck'
-            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 
 #     Blackduck-SCA:  
