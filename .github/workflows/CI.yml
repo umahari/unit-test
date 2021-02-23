@@ -143,7 +143,7 @@ jobs:
         env:
             SLACK_CHANNEL: '#test'
             SLACK_COLOR: '#FF8C00'
-            SLACK_MESSAGE: 'Critical or High Issues found in ${{ github.repository }}'
+            SLACK_MESSAGE: 'Operational Risk or High Issues found in ${{ github.repository }}'
             SLACK_TITLE: 'Blackduck scan'
             SLACK_USERNAME: 'Blackduck'
             SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
