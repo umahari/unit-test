@@ -107,10 +107,10 @@ jobs:
           SLACK_MESSAGE: "Executed Polaris Scan successfully"
           SLACK_USERNAME: "Username"
         with:
-          channel: '#test'
+          SLACK_CHANNEL: '#test'
 #           username: 'PolariSAST'
-          text: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
-          color: 'danger' 
+          SLACK_TEXT: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
+#           color: 'danger'  
       - if: steps.polaris_result.outcome == 'failure'
         name: Slack Notification
         uses: rtCamp/action-slack-notify@v2.0.2
@@ -119,10 +119,10 @@ jobs:
             SLACK_MESSAGE: "Polaris Scan Execution Failed "
             SLACK_USERNAME: "Username"
         with:
-          channel: '#test'
+         SLACK_CHANNEL: '#test'
 #           username: 'PolariSAST'
-          text: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
-          color: 'danger' 
+         SLACK_TEXT: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
+#           color: 'danger' 
    
 #       - run: |
 #            echo "REPOSITORY_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
