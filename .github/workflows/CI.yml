@@ -113,7 +113,41 @@ jobs:
           --logging.level.com.synopsys.integration="DEBUG" \
           --detect.tools="DETECTOR" \
           --detect.project.name="$REPOSITORY_NAME" \
-          --detect.project.version.distribution="SAAS" \  
+          --detect.project.version.distribution="SAAS" \ 
+          
+        # -- check the Blackduck scan results and break the build as per the policies defined in BD
+      - name: Break the build if any Critical and High issues are reported 
+        if: ${{ failure() }}
+        run: |
+            AUTH=$(curl -X POST \
+                --header "Accept: application/vnd.blackducksoftware.user-4+json" \
+                --header "Authorization: token ${{ secrets.BLACKDUCK_API_TOKEN }}" \
+                "https://ingka.app.blackduck.com/api/tokens/authenticate" \
+                | jq .bearerToken | tr -d \")
+            VERSIONS=$(curl -X GET \
+                --header "Accept: application/vnd.blackducksoftware.project-detail-4+json" \
+                --header "Authorization: Bearer $AUTH" \
+                "https://ingka.app.blackduck.com/api/projects?limit=999" \
+                | jq '.items[] | select(.name=="${{secrets.BLACKDUCK_PROJECT_NAME}}") | ._meta.links[] | select(.rel=="versions") | .href' | tr -d \")
+            URL=$(curl -X GET \
+                --header "Accept: application/vnd.blackducksoftware.project-detail-4+json" \
+                --header "Authorization: Bearer $AUTH" \
+                "$VERSIONS" \
+                | jq --arg CI_COMMIT_REF_NAME "Master" '.items[] | select(.versionName==$CI_COMMIT_REF_NAME) | ._meta.links[] | select(.rel=="components") | .href' | tr -d \")
+            echo "##[set-output name=result-url;]$URL )"
+    
+    
+      - name: Slack Notification
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2.1.2
+        env:
+            SLACK_CHANNEL: '#test'
+            SLACK_COLOR: '#FF8C00'
+            SLACK_MESSAGE: 'Critical or High Issues found in ${{ github.repository }}'
+            SLACK_TITLE: 'Blackduck scan'
+            SLACK_USERNAME: 'Blackduck'
+            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
 
 #     Blackduck-SCA:  
 #       name: "Blackduck SCA"
