@@ -104,7 +104,7 @@ jobs:
         uses: rtCamp/action-slack-notify@v2.0.2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_MESSAGE: "Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }}" 
+          SLACK_MESSAGE:  " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
 #           SLACK_MESSAGE: "Executed Polaris Scan successfully"
           SLACK_USERNAME: "Username"
 #         arg:
@@ -112,14 +112,14 @@ jobs:
 # #           username: 'PolariSAST'
 #            SLACK_TEXT: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
 # #           color: 'danger'  
-#       - if: steps.polaris_scan.outcome == 'failure'
-#         name: Slack Notification
-#         uses: rtCamp/action-slack-notify@v2.0.2
-#         env:
-#             SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-#   #         SLACK_MESSAGE: ""  
-#             SLACK_USERNAME: "Username"
-#        
+      - if: steps.polaris_scan.outcome == 'failure'
+        name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2.0.2
+        env:
+            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+            SLACK_MESSAGE: "polaris scan exection failed"  
+            SLACK_USERNAME: "Username"
+       
 #       - run: |
 #            echo "REPOSITORY_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
 #            echo $REPOSITORY_NAME
