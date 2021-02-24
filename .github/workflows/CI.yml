@@ -30,144 +30,144 @@ jobs:
         id: npm_install
         run: npm install
      # - run: yarn add --dev jest-junit
-      - name: npm build
-        id: npm_build
-        run: npm run build --if-present
-      - name: npm Test
-        id: npm_test
-        run: npm test
-        continue-on-error: true
-      - uses: act10ns/slack@v1
-        with:
-            status: ${{ job.status }}
-            steps: ${{ toJson(steps) }}
-            slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always() 
-        env: 
-         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
-  Polaris-scan:
-    name: "Polaris Scan"
-    runs-on: ubuntu-latest
-    # the build-and-test job might be skipped, we don't need to run this job then
-    if: success() || failure()
-    env:
-       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-    steps:        
-      
-      - name: Set up JDK 1.8 test 
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-
-
-
-      - name: Download Polaris_CLI
-        uses: carlosperate/download-file-action@v1.0.3
-        with:
-          file-url: 'https://ikea.polaris.synopsys.com/api/tools/polaris_cli-linux64.zip'
-          file-name: 'polaris_cli-linux64.zip'
-
-
-
-      - name: Unzip Polaris_CLI zip file
-        run: |
-             unzip polaris_cli-linux64.zip -d ./polaris_cli
-      - name: Run Polaris Scan
-        id: polaris_scan
-        env:
-          POLARIS_ACCESS_TOKEN: ${{secrets.POLARIS_ACCESS_TOKEN}}
-          POLARIS_SERVER_URL: ${{secrets.POLARIS_SERVER_URL}}
-        run: |
-             export PATH=$PATH:$(pwd)/polaris_cli/$(ls ./polaris_cli)/bin
-             polaris analyze --coverity-ignore-capture-failure --upload-local-config --wait 
-      - if: ${{steps.polaris_scan}}
-        name: Polaris Severity Issues
-        id: polaris_result
-        run: |
-          #cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary'
-          echo "##[set-output name=critical;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.critical' )"
-          echo "##[set-output name=high;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.high' )"
-          echo "##[set-output name=medium;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.medium' )"
-          echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.low' )"   
-
-    
-#       - name: Specifying what to panic about notification
-#         uses: adamkdean/simple-slack-notify@master
+#       - name: npm build
+#         id: npm_build
+#         run: npm run build --if-present
+#       - name: npm Test
+#         id: npm_test
+#         run: npm test
+#         continue-on-error: true
+#       - uses: act10ns/slack@v1
 #         with:
-#           channel: '#test'
-#           username: 'PolariSAST'
-#           text: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
-#           color: 'danger' 
-        
-      - if: steps.polaris_scan.outcome == 'success'
-        name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2.0.2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_MESSAGE:  " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
-#           SLACK_MESSAGE: "Executed Polaris Scan successfully"
-          SLACK_USERNAME: "Username"
-#         arg:
-#            SLACK_CHANNEL: '#test'
-# #           username: 'PolariSAST'
-#            SLACK_TEXT: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
-# #           color: 'danger'  
-      - if: steps.polaris_scan.outcome == 'failure'
-        name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2.0.2
-        env:
-            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-            SLACK_MESSAGE: "polaris scan exection failed"  
-            SLACK_USERNAME: "Username"
-       
-#       - run: |
-#            echo "REPOSITORY_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
-#            echo $REPOSITORY_NAME
-#         shell: bash
-        
-#       - name: Blackduck-SCA Scan
-#         uses: blackducksoftware/github-action@2.0.0
-#         with: 
-#          args: |
-#           --blackduck.url="${{ secrets.BLACKDUCK_URL}}" \
-#           --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN}}" \
-#           --logging.level.com.synopsys.integration="DEBUG" \
-#           --detect.tools="DETECTOR" \
-#           --detect.project.name="$REPOSITORY_NAME" \
-#           --detect.project.version.distribution="SAAS" \ 
-          
-#         # -- check the Blackduck scan results and break the build as per the policies defined in BD
-#       - name: Break the build if any Critical and High issues are reported 
-#         if: ${{ always() }}
+#             status: ${{ job.status }}
+#             steps: ${{ toJson(steps) }}
+#             slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+#         if: always() 
+#         env: 
+#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
+#   Polaris-scan:
+#     name: "Polaris Scan"
+#     runs-on: ubuntu-latest
+#     # the build-and-test job might be skipped, we don't need to run this job then
+#     if: success() || failure()
+#     env:
+#        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#     steps:        
+      
+#       - name: Set up JDK 1.8 test 
+#         uses: actions/setup-java@v1
+#         with:
+#           java-version: 1.8
+
+
+
+#       - name: Download Polaris_CLI
+#         uses: carlosperate/download-file-action@v1.0.3
+#         with:
+#           file-url: 'https://ikea.polaris.synopsys.com/api/tools/polaris_cli-linux64.zip'
+#           file-name: 'polaris_cli-linux64.zip'
+
+
+
+#       - name: Unzip Polaris_CLI zip file
 #         run: |
-#             AUTH=$(curl -X POST \
-#                 --header "Accept: application/vnd.blackducksoftware.user-4+json" \
-#                 --header "Authorization: token ${{ secrets.BLACKDUCK_API_TOKEN }}" \
-#                 "https://ingka.app.blackduck.com/api/tokens/authenticate" \
-#                 | jq .bearerToken | tr -d \")
-#             VERSIONS=$(curl -X GET \
-#                 --header "Accept: application/vnd.blackducksoftware.project-detail-4+json" \
-#                 --header "Authorization: Bearer $AUTH" \
-#                 "https://ingka.app.blackduck.com/api/projects?limit=999" \
-#                 | jq '.items[] | select(.name=="${{secrets.BLACKDUCK_PROJECT_NAME}}") | ._meta.links[] | select(.rel=="versions") | .href' | tr -d \")
-#             URL=$(curl -X GET \
-#                 --header "Accept: application/vnd.blackducksoftware.project-detail-4+json" \
-#                 --header "Authorization: Bearer $AUTH" \
-#                 "$VERSIONS" \
-#                 | jq --arg CI_COMMIT_REF_NAME "Master" '.items[] | select(.versionName==$CI_COMMIT_REF_NAME) | ._meta.links[] | select(.rel=="components") | .href' | tr -d \")
-#             echo "##[set-output name=result-url;]$URL )"
-    
-    
-#       - name: Slack Notification
-#         if: ${{ always() }}
-#         uses: rtCamp/action-slack-notify@v2.1.2
+#              unzip polaris_cli-linux64.zip -d ./polaris_cli
+#       - name: Run Polaris Scan
+#         id: polaris_scan
 #         env:
-#             SLACK_CHANNEL: '#test'
-#             SLACK_COLOR: '#FF8C00'
-#             SLACK_MESSAGE: 'Operational Risk or High Issues found in ${{ github.repository }}'
-#             SLACK_TITLE: 'Blackduck scan'
-#             SLACK_USERNAME: 'Blackduck'
+#           POLARIS_ACCESS_TOKEN: ${{secrets.POLARIS_ACCESS_TOKEN}}
+#           POLARIS_SERVER_URL: ${{secrets.POLARIS_SERVER_URL}}
+#         run: |
+#              export PATH=$PATH:$(pwd)/polaris_cli/$(ls ./polaris_cli)/bin
+#              polaris analyze --coverity-ignore-capture-failure --upload-local-config --wait 
+#       - if: ${{steps.polaris_scan}}
+#         name: Polaris Severity Issues
+#         id: polaris_result
+#         run: |
+#           #cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary'
+#           echo "##[set-output name=critical;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.critical' )"
+#           echo "##[set-output name=high;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.high' )"
+#           echo "##[set-output name=medium;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.medium' )"
+#           echo "##[set-output name=low;]$(cat ./.synopsys/polaris/cli-scan.json | jq '.issueSummary.issuesBySeverity.low' )"   
+
+    
+# #       - name: Specifying what to panic about notification
+# #         uses: adamkdean/simple-slack-notify@master
+# #         with:
+# #           channel: '#test'
+# #           username: 'PolariSAST'
+# #           text: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
+# #           color: 'danger' 
+        
+#       - if: steps.polaris_scan.outcome == 'success'
+#         name: Slack Notification
+#         uses: rtCamp/action-slack-notify@v2.0.2
+#         env:
+#           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+#           SLACK_MESSAGE:  " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
+# #           SLACK_MESSAGE: "Executed Polaris Scan successfully"
+#           SLACK_USERNAME: "Username"
+# #         arg:
+# #            SLACK_CHANNEL: '#test'
+# # #           username: 'PolariSAST'
+# #            SLACK_TEXT: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
+# # #           color: 'danger'  
+#       - if: steps.polaris_scan.outcome == 'failure'
+#         name: Slack Notification
+#         uses: rtCamp/action-slack-notify@v2.0.2
+#         env:
 #             SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+#             SLACK_MESSAGE: "polaris scan exection failed"  
+#             SLACK_USERNAME: "Username"
+       
+      - run: |
+           echo "REPOSITORY_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+           echo $REPOSITORY_NAME
+        shell: bash
+        
+      - name: Blackduck-SCA Scan
+        uses: blackducksoftware/github-action@2.0.0
+        with: 
+         args: |
+          --blackduck.url="${{ secrets.BLACKDUCK_URL}}" \
+          --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN}}" \
+          --logging.level.com.synopsys.integration="DEBUG" \
+          --detect.tools="DETECTOR" \
+          --detect.project.name="$REPOSITORY_NAME" \
+          --detect.project.version.distribution="SAAS" \ 
+          
+        # -- check the Blackduck scan results and break the build as per the policies defined in BD
+      - name: Break the build if any Critical and High issues are reported 
+        if: ${{ failer() }}
+        run: |
+            AUTH=$(curl -X POST \
+                --header "Accept: application/vnd.blackducksoftware.user-4+json" \
+                --header "Authorization: token ${{ secrets.BLACKDUCK_API_TOKEN }}" \
+                "https://ingka.app.blackduck.com/api/tokens/authenticate" \
+                | jq .bearerToken | tr -d \")
+            VERSIONS=$(curl -X GET \
+                --header "Accept: application/vnd.blackducksoftware.project-detail-4+json" \
+                --header "Authorization: Bearer $AUTH" \
+                "https://ingka.app.blackduck.com/api/projects?limit=999" \
+                | jq '.items[] | select(.name=="${{secrets.BLACKDUCK_PROJECT_NAME}}") | ._meta.links[] | select(.rel=="versions") | .href' | tr -d \")
+            URL=$(curl -X GET \
+                --header "Accept: application/vnd.blackducksoftware.project-detail-4+json" \
+                --header "Authorization: Bearer $AUTH" \
+                "$VERSIONS" \
+                | jq --arg CI_COMMIT_REF_NAME "Master" '.items[] | select(.versionName==$CI_COMMIT_REF_NAME) | ._meta.links[] | select(.rel=="components") | .href' | tr -d \")
+            echo "##[set-output name=result-url;]$URL )"
+    
+    
+      - name: Slack Notification
+        if: ${{ always() }}
+        uses: rtCamp/action-slack-notify@v2.1.2
+        env:
+            SLACK_CHANNEL: '#test'
+            SLACK_COLOR: '#FF8C00'
+            SLACK_MESSAGE: 'Critical or High Issues found in ${{ github.repository }}'
+            SLACK_TITLE: 'Blackduck scan'
+            SLACK_USERNAME: 'Blackduck'
+            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 
 #     Blackduck-SCA:  
