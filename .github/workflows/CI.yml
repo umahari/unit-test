@@ -5,9 +5,9 @@ on: [push]
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
     steps:
-    - uses: actions/checkout@v1
+#     - uses: actions/checkout@v1
 
     - uses: c-hive/gha-npm-cache@v1
 
