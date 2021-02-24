@@ -48,11 +48,11 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 #       ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     steps:
-      - uses: act10ns/slack@v1
-        with:
-         status: starting
-         channel: '#test'
-         if: always()
+#       - uses: act10ns/slack@v1
+#         with:
+#          status: starting
+#          channel: '#test'
+#          if: always()
       
     
       - uses: actions/checkout@v2
@@ -64,8 +64,7 @@ jobs:
       - name: npm Install
         id: npm_install
         run: npm install
-      - name: npm Install 
-        run: npm cache install
+      
    
 
     
