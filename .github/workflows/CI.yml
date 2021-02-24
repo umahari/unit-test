@@ -55,38 +55,38 @@ jobs:
 #     - name: Test
 #       run: npm test
 
-name: Build and Push to DockerHub
-on:
-  push:
-    branches:
-      - main
-jobs:
-  build:
-    name: node js workflow
-    runs-on: ubuntu-16.04
-    strategy:
-      matrix:
-        node-version: [13.x]
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-#       ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-    steps:
-#       - uses: act10ns/slack@v1
-#         with:
-#          status: starting
-#          channel: '#test'
-#          if: always()
+# name: Build and Push to DockerHub
+# on:
+#   push:
+#     branches:
+#       - main
+# jobs:
+#   build:
+#     name: node js workflow
+#     runs-on: ubuntu-16.04
+#     strategy:
+#       matrix:
+#         node-version: [13.x]
+#     env:
+#       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+# #       ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+#     steps:
+# #       - uses: act10ns/slack@v1
+# #         with:
+# #          status: starting
+# #          channel: '#test'
+# #          if: always()
       
     
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        id: setup_NodeJS
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: npm Install
-        id: npm_install
-        run: npm install
+#       - uses: actions/checkout@v2
+#       - name: Use Node.js ${{ matrix.node-version }}
+#         id: setup_NodeJS
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: ${{ matrix.node-version }}
+#       - name: npm Install
+#         id: npm_install
+#         run: npm install
       
    
 
