@@ -1,4 +1,27 @@
 # .github/workflows/deploy.yaml nodejs app.
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  node_version: "12.x"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.node_version }}
+      - uses: c-hive/gha-npm-cache@v1
+      - name: Install JS dependencies
+        run: npm install
 # name: Caching with npm
 
 # on: push
