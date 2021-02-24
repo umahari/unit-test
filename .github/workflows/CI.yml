@@ -99,8 +99,8 @@ jobs:
 #           text: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
 #           color: 'danger' 
         
-      - if: steps.polaris_result.outcome == 'success'
-      - name: Slack Notification
+      - if: steps.polaris_scan.outcome == 'success'
+        name: Slack Notification
         uses: rtCamp/action-slack-notify@v2.0.2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -112,19 +112,14 @@ jobs:
 # #           username: 'PolariSAST'
 #            SLACK_TEXT: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
 # #           color: 'danger'  
-#       - if: steps.polaris_result.outputs == 'failure'
+#       - if: steps.polaris_scan.outcome == 'failure'
 #         name: Slack Notification
 #         uses: rtCamp/action-slack-notify@v2.0.2
 #         env:
 #             SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-#   #         SLACK_MESSAGE: "Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
+#   #         SLACK_MESSAGE: ""  
 #             SLACK_USERNAME: "Username"
-#         with:
-#          SLACK_CHANNEL: '#test'
-# #           username: 'PolariSAST'
-#          SLACK_TEXT: " Polaris SAST Result:\n Critical: ${{ steps.polaris_result.outputs.critical }} \n High: ${{ steps.polaris_result.outputs.high }} \n Medium: ${{ steps.polaris_result.outputs.medium }} \n Low: ${{ steps.polaris_result.outputs.low }} \n Please Check and Fix the Issues"  
-# #           color: 'danger' 
-   
+#        
 #       - run: |
 #            echo "REPOSITORY_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
 #            echo $REPOSITORY_NAME
