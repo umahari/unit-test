@@ -159,7 +159,7 @@ jobs:
     
     
       - name: Slack Notification
-        if: ${{ always() }}
+        if: ${{ failure() }}
         uses: rtCamp/action-slack-notify@v2.1.2
         env:
             SLACK_CHANNEL: '#test'
