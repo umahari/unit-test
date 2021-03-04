@@ -1,4 +1,4 @@
-#test eslinttest.
+#test eslinttest
 name: Pull request
 on:
   pull_request:
