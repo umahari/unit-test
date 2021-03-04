@@ -1,7 +1,7 @@
 #test eslinttest
-name: Pull request
+name: Eslint
 on:
-  pull_request:
+  push
 env:
   CI: true
 jobs:
@@ -49,6 +49,4 @@ jobs:
                 -X POST "https://slack.com/api/chat.postMessage"
                 fi
             
-                
-      - run: npm test
-    
+     
