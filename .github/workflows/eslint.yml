@@ -1,0 +1,54 @@
+#test eslinttest
+name: Pull request
+on:
+  pull_request:
+env:
+  CI: true
+jobs:
+  pr:
+    name: "PR for merge to: '${{github.base_ref}}'"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm cache clean --force    
+      - run: npm install
+      - run: npm run build
+      #- run: npm install eslint --save-dev
+      - run: npm run lint
+#       - name: Annotate Code Linting Results
+#         uses: ataylorme/eslint-annotate-action@1.1.2
+#         with:
+#           repo-token: "${{ secrets.GITHUB_TOKEN }}"
+#           report-json: "eslint_report.json"
+#       - name: Upload ESLint report
+#         uses: actions/upload-artifact@v1
+#         with:
+#           name: eslint_report.json
+#           path: eslint_report.json
+          
+      - name: Esint Result   
+        id: Eslint_Result
+        shell : bash
+        run: |
+            echo "##[set-output name=result;]$(cat ./eslint_report.json )"
+            
+      - name: Slack Notification
+        shell: bash
+        run: |
+            
+                if [[ $(cat ./eslint_report.json | jq '.[].errorCount')  > 0  ||   $(cat ./eslint_report.json | jq '.[].warningCount') > 0 ]] ; then
+                outText="\n Eslint Result : \n\t errorCount : "$(cat ./eslint_report.json | jq  '.[].errorCount')"\n\t \
+                warningCount : "$(cat ./eslint_report.json | jq '.[].warningCount' )""
+                curl -d "{\"channel\":\"${{secrets.SLACK_CHANNEL_NAME}}\",\"text\":\"$outText\"}" \
+                -H "Content-Type:application/json;charset=utf-8" \
+                -H "Authorization:Bearer "${{secrets.SLACK_API_TOKEN}} \
+                -X POST "https://slack.com/api/chat.postMessage"
+                fi
+            
+                
+      - run: npm test
+    
